@@ -65,6 +65,21 @@ public class EnterpriseLifecycleServiceImpl implements EnterpriseLifecycleServic
      * {@inheritDoc}
      */
     @Override
+    public Enterprise addAddressToEnterprise(String enterpriseId, AddressDto addressDto, boolean replaceHeadOffice) {
+        Enterprise enterprise = enterpriseRepository.findById(enterpriseId).orElseThrow(() -> new ResourceNotFoundException("cannot find enterprise with id {0}", enterpriseId));
+
+        Address address = addressLifecycleService.createOrUpdate(addressDto);
+
+        enterprise.getAddresses().add(address);
+        if (replaceHeadOffice) enterprise.setHeadOffice(address);
+
+        return enterpriseRepository.save(enterprise);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void deleteEnterprise(String enterpriseId) {
         enterpriseRepository.deleteById(enterpriseId);
     }

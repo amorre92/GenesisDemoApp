@@ -1,5 +1,6 @@
 package amorre.genesis.demo.controller;
 
+import amorre.genesis.demo.dto.AddressDto;
 import amorre.genesis.demo.dto.EnterpriseDto;
 import amorre.genesis.demo.exception.ResourceNotFoundException;
 import amorre.genesis.demo.repository.EnterpriseRepository;
@@ -54,6 +55,12 @@ public class EnterpriseController {
         Assert.isTrue(enterpriseDto.getId().equals(id), "payload mismatch between received enterpriseDto and desired id");
 
         return EnterpriseDto.from(enterpriseLifecycleService.updateEnterprise(enterpriseDto));
+    }
+
+    @PutMapping("/enterprises/{id}/address")
+    public EnterpriseDto updateEnterpriseAddAddress(@PathVariable("id") String id, @RequestBody AddressDto addressDto,
+                                                    @RequestParam(value = "replaceHeadOffice", required = false, defaultValue = "false") Boolean replaceHeadOffice) {
+        return EnterpriseDto.from(enterpriseLifecycleService.addAddressToEnterprise(id, addressDto, replaceHeadOffice));
     }
 
     @DeleteMapping("/enterprises/{id}")
