@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -37,11 +38,11 @@ public class Contact {
     String vatNumber;
 
     @ManyToMany(mappedBy = "contacts", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    Set<Enterprise> enterprises;
+    Set<Enterprise> enterprises = new HashSet<>();
 
     public void addEnterprise(Enterprise enterprise) {
         this.enterprises.add(enterprise);
-        enterprise.addContact(this);
+        enterprise.getContacts().add(this);
     }
 
 }

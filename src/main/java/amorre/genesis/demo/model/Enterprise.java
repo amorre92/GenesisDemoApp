@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,7 +31,7 @@ public class Enterprise {
     Address headOffice;
 
     @OneToMany
-    Set<Address> addresses;
+    Set<Address> addresses = new HashSet<>();
 
     @JoinTable(
             name = "working_relation",
@@ -38,10 +39,10 @@ public class Enterprise {
             inverseJoinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "id", nullable = false)
     )
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    Set<Contact> contacts;
+    Set<Contact> contacts = new HashSet<>();
 
     public void addContact(Contact contact) {
         this.contacts.add(contact);
-        contact.addEnterprise(this);
+        contact.getEnterprises().add(this);
     }
 }
