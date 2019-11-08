@@ -40,4 +40,11 @@ public interface ContactLifecycleService {
      * @param contactId the id of the contact to delete
      */
     void deleteContact(String contactId);
+
+    /**
+     * Validates a dto
+     *
+     * @param contactDto dto
+     */
+    void validateDto(ContactDto contactDto);
 }

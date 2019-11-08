@@ -73,7 +73,11 @@ public class ContactLifecycleServiceImpl implements ContactLifecycleService {
         contactRepository.delete(contact);
     }
 
-    private void validateDto(ContactDto contactDto) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void validateDto(ContactDto contactDto) {
         Assert.notNull(contactDto.getAddress(), "address cannot be null");
         Assert.notNull(contactDto.getFirstName(), "firstName cannot be null");
         Assert.notNull(contactDto.getLastName(), "lastName cannot be null");
