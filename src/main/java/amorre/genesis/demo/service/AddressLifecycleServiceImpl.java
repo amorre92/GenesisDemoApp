@@ -31,7 +31,7 @@ public class AddressLifecycleServiceImpl implements AddressLifecycleService {
         Address address;
         if (addressDto.getId() == null) {
             address = addressRepository
-                    .findByCityAndStreetAndNumberAndZipCodeAndCountry(addressDto.getCountry(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getZipCode(), addressDto.getCountry())
+                    .findByCityAndStreetAndNumberAndZipCodeAndCountry(addressDto.getCity(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getZipCode(), addressDto.getCountry())
                     .orElseGet(() -> new Address().setId(UUID.randomUUID().toString()));
         } else {
             address = addressRepository.findById(addressDto.getId()).orElseThrow(() -> new ResourceNotFoundException("cannot find address with id {0}"));

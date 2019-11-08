@@ -57,7 +57,7 @@ public class EnterpriseController {
         return EnterpriseDto.from(enterpriseLifecycleService.updateEnterprise(enterpriseDto));
     }
 
-    @PutMapping("/enterprises/{id}/address")
+    @PutMapping("/enterprises/{id}/addresses")
     public EnterpriseDto updateEnterpriseAddAddress(@PathVariable("id") String id, @RequestBody AddressDto addressDto,
                                                     @RequestParam(value = "replaceHeadOffice", required = false, defaultValue = "false") Boolean replaceHeadOffice) {
         return EnterpriseDto.from(enterpriseLifecycleService.addAddressToEnterprise(id, addressDto, replaceHeadOffice));
