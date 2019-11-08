@@ -54,4 +54,10 @@ public interface EnterpriseLifecycleService {
      * @param enterpriseId the id of the enterprise to delete
      */
     void deleteEnterprise(String enterpriseId);
+
+    /**
+     * Validated enterprise dto
+     * @param enterpriseDto dto
+     */
+    void validateDto(EnterpriseDto enterpriseDto);
 }

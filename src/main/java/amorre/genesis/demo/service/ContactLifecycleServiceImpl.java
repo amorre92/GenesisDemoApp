@@ -82,7 +82,7 @@ public class ContactLifecycleServiceImpl implements ContactLifecycleService {
         Assert.notNull(contactDto.getFirstName(), "firstName cannot be null");
         Assert.notNull(contactDto.getLastName(), "lastName cannot be null");
         Assert.notNull(contactDto.getEnterpriseIds(), "a contact must have a link to enterprise(s)");
-        Assert.isTrue(contactDto.getEnterpriseIds().size() >= 1, "a contact must have at least one enterprise");
+        Assert.notEmpty(contactDto.getEnterpriseIds(), "a contact must have at least one enterprise");
 
         if (EmployeeType.FREELANCE.equals(contactDto.getEmployeeType()))
             Assert.notNull(contactDto.getVatNumber(), "vat number cannot be null for a freelance contact");

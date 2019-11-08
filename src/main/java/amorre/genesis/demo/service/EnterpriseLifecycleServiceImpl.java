@@ -84,11 +84,15 @@ public class EnterpriseLifecycleServiceImpl implements EnterpriseLifecycleServic
         enterpriseRepository.deleteById(enterpriseId);
     }
 
-    private void validateDto(EnterpriseDto enterpriseDto) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void validateDto(EnterpriseDto enterpriseDto) {
         Assert.notNull(enterpriseDto.getVatNumber(), "vat number cannot be null");
         Assert.notNull(enterpriseDto.getHeadOffice(), "head office cannot be null");
         Assert.notNull(enterpriseDto.getAddresses(), "there must be addresses for an enterprise");
-        Assert.isTrue(enterpriseDto.getAddresses().size() >= 1, "an enterprise must at least have one address (head office)");
+        Assert.notEmpty(enterpriseDto.getAddresses(), "an enterprise must at least have one address (head office)");
     }
 
     private void setFieldsFromDto(Enterprise enterprise, EnterpriseDto enterpriseDto) {

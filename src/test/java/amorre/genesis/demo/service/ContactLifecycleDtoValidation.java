@@ -41,7 +41,7 @@ public class ContactLifecycleDtoValidation {
     @Test
     public void testOk() {
         assertThatCode(
-                () -> contactLifecycleService.createContact(validDto())).doesNotThrowAnyException();
+                () -> contactLifecycleService.validateDto(validDto())).doesNotThrowAnyException();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ContactLifecycleDtoValidation {
         ContactDto contactDto = validDto();
         contactDto.setLastName(null);
         assertThatIllegalArgumentException().isThrownBy(
-                () -> contactLifecycleService.createContact(contactDto)).withMessage("lastName cannot be null");
+                () -> contactLifecycleService.validateDto(contactDto)).withMessage("lastName cannot be null");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ContactLifecycleDtoValidation {
         ContactDto contactDto = validDto();
         contactDto.setFirstName(null);
         assertThatIllegalArgumentException().isThrownBy(
-                () -> contactLifecycleService.createContact(contactDto)).withMessage("firstName cannot be null");
+                () -> contactLifecycleService.validateDto(contactDto)).withMessage("firstName cannot be null");
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ContactLifecycleDtoValidation {
         ContactDto contactDto = validDto();
         contactDto.setAddress(null);
         assertThatIllegalArgumentException().isThrownBy(
-                () -> contactLifecycleService.createContact(contactDto)).withMessage("address cannot be null");
+                () -> contactLifecycleService.validateDto(contactDto)).withMessage("address cannot be null");
     }
 
     @Test
@@ -73,7 +73,7 @@ public class ContactLifecycleDtoValidation {
         ContactDto contactDto = validDto();
         contactDto.setEnterpriseIds(null);
         assertThatIllegalArgumentException().isThrownBy(
-                () -> contactLifecycleService.createContact(contactDto)).withMessage("a contact must have a link to enterprise(s)");
+                () -> contactLifecycleService.validateDto(contactDto)).withMessage("a contact must have a link to enterprise(s)");
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ContactLifecycleDtoValidation {
         ContactDto contactDto = validDto();
         contactDto.setEnterpriseIds(new HashSet<>());
         assertThatIllegalArgumentException().isThrownBy(
-                () -> contactLifecycleService.createContact(contactDto)).withMessage("a contact must have at least one enterprise");
+                () -> contactLifecycleService.validateDto(contactDto)).withMessage("a contact must have at least one enterprise");
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ContactLifecycleDtoValidation {
         ContactDto contactDto = validDto();
         contactDto.setEmployeeType(EmployeeType.FREELANCE);
         assertThatIllegalArgumentException().isThrownBy(
-                () -> contactLifecycleService.createContact(contactDto)).withMessage("vat number cannot be null for a freelance contact");
+                () -> contactLifecycleService.validateDto(contactDto)).withMessage("vat number cannot be null for a freelance contact");
     }
 
     private ContactDto validDto() {
