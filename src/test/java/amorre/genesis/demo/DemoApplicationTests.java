@@ -1,13 +1,12 @@
 package amorre.genesis.demo;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Test;
 
-@SpringBootTest
-class DemoApplicationTests {
+
+public class DemoApplicationTests extends AbstractIntegrationTest{
 
     @Test
-    void contextLoads() {
+    public void startupOk() {
     }
 
 }

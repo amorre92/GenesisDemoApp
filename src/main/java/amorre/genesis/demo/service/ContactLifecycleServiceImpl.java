@@ -65,7 +65,12 @@ public class ContactLifecycleServiceImpl implements ContactLifecycleService {
      */
     @Override
     public void deleteContact(String contactId) {
-        contactRepository.deleteById(contactId);
+        Contact contact = contactRepository.findById(contactId)
+                .orElseThrow(() -> new ResourceNotFoundException("cannot find contact with id {0}", contactId));
+
+        contact.removeAllEnterprises();
+        contactRepository.save(contact);
+        contactRepository.delete(contact);
     }
 
     private void validateDto(ContactDto contactDto) {
@@ -86,8 +91,20 @@ public class ContactLifecycleServiceImpl implements ContactLifecycleService {
                 .setVatNumber(contactDto.getVatNumber())
                 .setFirstName(contactDto.getFirstName())
                 .setLastName(contactDto.getLastName());
-        if (contactDto.getEnterpriseIds() != null && !contactDto.getEnterpriseIds().isEmpty()) {
+
+
+        // remove unused enterprises
+        contact.getEnterprises()
+                .stream()
+                .filter(e -> !contactDto.getEnterpriseIds().contains(e.getId()))
+                .forEach(contact::removeEnterprise);
+
+        if (contactDto.getEnterpriseIds() != null && contactDto.getEnterpriseIds().size() >= 1) {
+
+            // add new ones
             enterpriseRepository.findAllById(contactDto.getEnterpriseIds())
+                    .stream()
+                    .filter(e -> contactDto.getEnterpriseIds().contains(e.getId()) && !contact.getEnterprises().contains(e))
                     .forEach(contact::addEnterprise);
         }
     }

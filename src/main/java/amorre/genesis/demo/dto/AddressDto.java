@@ -12,6 +12,7 @@ public class AddressDto {
     private String street;
     private String zipCode;
     private String country;
+    private String city;
 
     public static AddressDto from(Address address) {
         AddressDto o = new AddressDto();
@@ -20,6 +21,7 @@ public class AddressDto {
         o.setStreet(address.getStreet());
         o.setZipCode(address.getZipCode());
         o.setCountry(address.getCountry());
+        o.setCity(address.getCity());
         return o;
     }
 
@@ -61,5 +63,13 @@ public class AddressDto {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

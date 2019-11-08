@@ -97,8 +97,16 @@ public class EnterpriseLifecycleServiceImpl implements EnterpriseLifecycleServic
                 .setHeadOffice(addressLifecycleService.createOrUpdate(enterpriseDto.getHeadOffice()))
                 .setVatNumber(enterpriseDto.getVatNumber());
 
+        // remove not used contacts
+        enterprise.getContacts()
+                .stream()
+                .filter(c -> !enterpriseDto.getContacts().contains(c.getId()))
+                .forEach(enterprise::removeContact);
+
         if (enterpriseDto.getContacts() != null && enterpriseDto.getContacts().size() >= 1) {
             contactRepository.findAllById(enterpriseDto.getContacts())
+                    .stream()
+                    .filter(c -> enterpriseDto.getContacts().contains(c.getId()) && !enterprise.getContacts().contains(c))
                     .forEach(enterprise::addContact);
         }
     }

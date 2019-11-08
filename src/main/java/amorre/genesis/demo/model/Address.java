@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(uniqueConstraints =
-        @UniqueConstraint(columnNames = {"street", "number", "zipCode", "country"})
+        @UniqueConstraint(columnNames = {"street", "number", "zipCode", "city", "country"})
 )
 public class Address {
 

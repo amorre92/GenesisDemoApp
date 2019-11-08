@@ -45,4 +45,16 @@ public class Contact {
         enterprise.getContacts().add(this);
     }
 
+    public void removeEnterprise(Enterprise enterprise) {
+        this.enterprises.remove(enterprise);
+        enterprise.getContacts().remove(this);
+    }
+
+    public void removeAllEnterprises() {
+        for (Enterprise e : this.enterprises) {
+            e.getContacts().remove(this);
+        }
+        enterprises.clear();
+    }
+
 }

@@ -29,7 +29,7 @@ public class AddressLifecycleServiceImpl implements AddressLifecycleService {
     public Address createOrUpdate(AddressDto addressDto) {
 
         Address address;
-        if (addressDto.getId() != null) {
+        if (addressDto.getId() == null) {
             address = addressRepository
                     .findByCityAndStreetAndNumberAndZipCodeAndCountry(addressDto.getCountry(), addressDto.getStreet(), addressDto.getNumber(), addressDto.getZipCode(), addressDto.getCountry())
                     .orElseGet(() -> new Address().setId(UUID.randomUUID().toString()));
@@ -37,6 +37,16 @@ public class AddressLifecycleServiceImpl implements AddressLifecycleService {
             address = addressRepository.findById(addressDto.getId()).orElseThrow(() -> new ResourceNotFoundException("cannot find address with id {0}"));
         }
 
+        setAddressCommonFields(address, addressDto);
+
         return addressRepository.save(address);
+    }
+
+    private void setAddressCommonFields(Address address, AddressDto addressDto) {
+        address.setZipCode(addressDto.getZipCode())
+                .setCountry(addressDto.getCountry())
+                .setNumber(addressDto.getNumber())
+                .setStreet(addressDto.getStreet())
+                .setCity(addressDto.getCity());
     }
 }
